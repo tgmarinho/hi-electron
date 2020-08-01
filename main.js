@@ -1,11 +1,13 @@
 const { app, BrowserWindow } = require("electron");
 
-// Enable live reload for Electron too
+// Habilita o live reload no Electron e no Frontend da aplicação com a lib electron-reload
+// Assim que alguma alteração no código é feita
 require("electron-reload")(__dirname, {
   // Note that the path to electron may vary according to the main file
   electron: require(`${__dirname}/node_modules/electron`),
 });
 
+// Função que cria uma janela desktop
 function createWindow() {
   // Cria uma janela de navegação.
   const win = new BrowserWindow({
@@ -20,7 +22,9 @@ function createWindow() {
   // carrega a janela com o conteúdo dentro de index.html
   win.loadFile("index.html");
 
-  // Abre o console do navegador (DevTools).
+  // Abre o console do navegador (DevTools),
+  // manter apenas quando estiver desenvolvendo a aplicação,
+  // pode utilizar variáveis de ambiente do node para executar esse código apenas quando estiver em modo DEV
   // win.webContents.openDevTools();
 }
 

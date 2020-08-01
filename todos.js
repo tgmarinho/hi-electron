@@ -1,8 +1,8 @@
 "use strict";
 
-console.log(" ---> Lendo o arquito todos.js");
+console.log(" ---> Lendo o arquivo todos.js");
 
-// Cria o botão excluir para a lista de tarefas já existentes.
+// Cria os botões para excluir um item da lista de tarefas (que já foram criados no via html).
 const myNodelist = document.querySelectorAll("li");
 myNodelist.forEach((_, index) => {
   let span = document.createElement("span");
@@ -15,18 +15,14 @@ myNodelist.forEach((_, index) => {
 // Clicando no botão para excluir a tarefa da lista
 const closesButton = document.querySelectorAll(".close");
 
-function addCloseButton() {
-  closesButton.forEach((_, index) => {
-    closesButton[index].onclick = function () {
-      const div = this.parentElement;
-      div.style.display = "none";
-    };
-  });
-}
+closesButton.forEach((_, index) => {
+  closesButton[index].onclick = function () {
+    const div = this.parentElement;
+    div.style.display = "none";
+  };
+});
 
-addCloseButton();
-
-// Marca a tarefa como checada quando clicar em algum item da lista
+// Marca/desmarca a tarefa como feita quando clicar em algum item da lista
 const todoList = document.querySelector("ul");
 todoList.addEventListener(
   "click",
@@ -38,7 +34,7 @@ todoList.addEventListener(
   false
 );
 
-// Cria uma nota lista de tarefas quando clicar no botão addNewTodo
+// Cria uma nova tarefa na lista de tarefas quando clicar no botão ADD ou pressionar ENTER no teclado
 function addNewTodo(event) {
   if (event && event.keyCode !== 13) return;
 

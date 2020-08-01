@@ -1,15 +1,12 @@
+<h1 align="center">👋 Hi Electron</h1>
 
-<h1 align="center">👋 hi-electron</h1>
-
-
-> 📝 Just a hello world in Electron framework - TODO List
+> 📝 Just a hello world in Electron platform - TODO List
 
 ![](https://media.giphy.com/media/hXCi7Q5m65BLBpQgan/giphy.gif)
 
-<p align="center">⚛️ It's is my first app in built with Electron</p>
+<p align="center">⚛️ It's is my first app built with Electron</p>
 
-
-___ 
+---
 
 ## Tech Stack
 
@@ -20,8 +17,6 @@ ___
 - Node.js
 
 > See the file [package.json](https://github.com/tgmarinho/hi-electron/blob/master/package.json)
-
-
 
 ## Author
 
