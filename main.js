@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, nativeImage } = require("electron");
 
 // Habilita o live reload no Electron e no Frontend da aplicação com a lib electron-reload
 // Assim que alguma alteração no código é feita
@@ -9,8 +9,16 @@ require("electron-reload")(__dirname, {
 
 // Função que cria uma janela desktop
 function createWindow() {
+  // Adicionando um ícone na barra de tarefas/dock
+  const icon = nativeImage.createFromPath(`${app.getAppPath()}/build/icon.png`);
+
+  if (app.dock) {
+    app.dock.setIcon(icon);
+  }
+
   // Cria uma janela de navegação.
   const win = new BrowserWindow({
+    icon,
     width: 800,
     height: 600,
     webPreferences: {
