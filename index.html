@@ -4,43 +4,212 @@
       <title>Hello Rocketseat</title>
       <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
       <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-
       <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
       <!--Importo o arquivo styles.css que criei para estilizar essa janela -->
-      <link rel="stylesheet" href="styles.css">
+      <style>
+          * {
+            box-sizing: border-box;
+          }
+          body {
+              margin: 0;
+              min-width: 250px;
+              background-color: #8257e5;
+              color: #f0f0f0;
+              font-family: "Roboto", sans-serif;
+          }
+          .intro {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+          }
+          ul {
+              margin: 0;
+              padding: 0;
+          }
+          /* Style the list items */
+          ul li {
+              cursor: pointer;
+              position: relative;
+              padding: 12px 8px 12px 40px;
+              list-style-type: none;
+              background: transparent;
+              font-size: 18px;
+              transition: 0.2s;
+              /* make the list items unselectable */
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+          }
+          /* Set all odd list items to a different color (zebra-stripes) */
+          ul li:nth-child(odd) {
+              /* background: #f9f9f9;
+              */
+          }
+          /* Darker background-color on hover */
+          ul li:hover {
+              background: #7159c1;
+          }
+          /* When clicked on, add a background color and strike out text */
+          ul li.checked {
+              background: rgba(200, 200, 200, 0.3);
+              color: #fff;
+              text-decoration: line-through;
+          }
+          /* Add a "checked" mark when clicked on */
+          ul li.checked::before {
+              content: "";
+              position: absolute;
+              border-color: #fff;
+              border-style: solid;
+              border-width: 0 2px 2px 0;
+              top: 10px;
+              left: 16px;
+              transform: rotate(45deg);
+              height: 15px;
+              width: 7px;
+          }
+          /* Style the close button */
+          .close {
+              position: absolute;
+              right: 0;
+              top: 0;
+              padding: 12px 16px 12px 16px;
+          }
+          .close:hover {
+              background-color: rgba(130, 702, 205, 0.3);
+              color: white;
+          }
+          /* Style the header */
+          .card__todo {
+              margin: 5px;
+              background-color: transparent;
+              padding: 30px 40px;
+              color: white;
+              text-align: center;
+          }
+          /* Clear floats after the header */
+          .card__todo:after {
+              content: "";
+              display: table;
+              clear: both;
+          }
+          /* Style the input */
+          input {
+              margin: 0;
+              border: none;
+              border-radius: 0;
+              width: 75%;
+              padding: 10px;
+              float: left;
+              font-size: 16px;
+              background-color: rgba(0, 0, 0, 0.3);
+              color: #fff;
+          }
+          ::placeholder {
+              color: #ddd;
+          }
+          /* Style the "Add" button */
+          .btn__add {
+              padding: 10px;
+              width: 15%;
+              background: #7159c1;
+              color: #fff;
+              float: left;
+              text-align: center;
+              font-size: 16px;
+              cursor: pointer;
+              transition: 0.3s;
+              border-radius: 0;
+          }
+          .btn__add:hover {
+              background-color: rgba(200, 200, 200, 0.3);
+          }
       </style>
    </head>
    <body>
-     
       <div class="intro">
-
-        <h1>Hi Electron!</h1>
-        <p>
-          We are using node <script>document.write(process.versions.node)</script>,
-          Chrome <script>document.write(process.versions.chrome)</script>,
-          and Electron <script>document.write(process.versions.electron)</script>.
-        </p>
-      
-        <h3>Meu primeiro app feito em Electron, usando só HTML, CSS e JS</h3>
-     
+         <h1>Hi Electron!</h1>
+         <p>
+            We are using node <script>document.write(process.versions.node)</script>,
+            Chrome <script>document.write(process.versions.chrome)</script>,
+            and Electron <script>document.write(process.versions.electron)</script>.
+         </p>
+         <h3>Meu primeiro app feito em Electron, usando só HTML, CSS e JS</h3>
       </div>
-
       <div class="card__todo">
          <h2>O que vou fazer hoje?</h2>
          <input type="text" onkeyup="addNewTodo(event)"  id="inputTodo" placeholder="Escreva sua atividade...">
          <span onclick="addNewTodo()" class="btn__add">ADD</span>
       </div>
-     
       <ul id="ulTodo">
          <li class="checked">Fazer inscrição na NLW02</li>
          <li>Ler um post no blog da Rocketseat</li>
          <li class="checked">Estudar JavaScript</li>
          <li>Estudar a Doc do Electron</li>
       </ul>
-
-
-      <script src="todos.js" type="text/javascript"></script>
-        
-      
+      <script>
+         console.log(" ---> Lendo o arquivo todos.js");
+         
+         // Cria os botões para excluir um item da lista de tarefas (que já foram criados no via html).
+         const myNodelist = document.querySelectorAll("li");
+         myNodelist.forEach((_, index) => {
+           let span = document.createElement("span");
+           let iconDelete = document.createTextNode("\u00D7");
+           span.className = "close";
+           span.appendChild(iconDelete);
+           myNodelist[index].appendChild(span);
+         });
+         
+         // Clicando no botão para excluir a tarefa da lista
+         const closesButton = document.querySelectorAll(".close");
+         
+         closesButton.forEach((_, index) => {
+           closesButton[index].onclick = function () {
+             const div = this.parentElement;
+             div.style.display = "none";
+           };
+         });
+         
+         // Marca/desmarca a tarefa como feita quando clicar em algum item da lista
+         const todoList = document.querySelector("ul");
+         todoList.addEventListener(
+           "click",
+           function (e) {
+             if (e.target.tagName === "LI") {
+               e.target.classList.toggle("checked");
+             }
+           },
+           false
+         );
+         
+         // Cria uma nova tarefa na lista de tarefas quando clicar no botão ADD ou pressionar ENTER no teclado
+         function addNewTodo(event) {
+           if (event && event.keyCode !== 13) return;
+         
+           const li = document.createElement("li");
+           const inputTodo = document.getElementById("inputTodo").value;
+           let t = document.createTextNode(inputTodo);
+           li.appendChild(t);
+           if (inputTodo === "") {
+             alert("Digite alguma tarefa!");
+           } else {
+             document.getElementById("ulTodo").appendChild(li);
+           }
+           document.getElementById("inputTodo").value = "";
+         
+           const span = document.createElement("SPAN");
+           const iconDelete = document.createTextNode("\u00D7");
+           span.className = "close";
+           span.appendChild(iconDelete);
+           li.appendChild(span);
+         
+           span.onclick = function () {
+             const div = this.parentElement;
+             div.style.display = "none";
+           };
+         }
+         
+      </script>
    </body>
 </html>
